@@ -202,10 +202,10 @@ function showDetailsMovie(show){
     let budgetString = "";
     let revenueString = "";
     if(budget > 0){
-        budgetString = `Budget: $${budget}`
+        budgetString = `Budget: $ ${moneyFormatter(budget)}`
     }
     if(revenue > 0){
-        revenueString = `Revenue: $${revenue}`
+        revenueString = `Revenue: $ ${moneyFormatter(revenue)}`
     }
     // Anexar a nova div ao corpo do documento
     details = document.getElementById('details');
@@ -267,4 +267,19 @@ function dataFormatter(oldDate){
 function capturarPosicaoMouse(event) {
     posicaoMouse = event.clientY + window.scrollY;
     console.log('Click: ' + posicaoMouse + 'px');
+}
+
+function moneyFormatter(value){
+    const k = value/1000;
+    if(k > 1000){
+        const m = k/1000;
+        if(m > 1000){
+            const b = m/1000;
+            return `${b.toFixed(1)} B`;
+        }
+        return `${m.toFixed(1)} M`;
+    }
+    else{
+        return `${k.toFixed(1)} K`;
+    }
 }
