@@ -1,6 +1,6 @@
 const apiKey = "fc535d51c073ba114e04ff261a9b6350";
 const imgApi = "https://image.tmdb.org/t/p/w1280";
-const searchUrl = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=pt-BR&query=`;
+const searchUrl = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}query=`;
 const form = document.getElementById("search-form");
 const query = document.getElementById("search-input");
 const result = document.getElementById("result");
@@ -95,7 +95,7 @@ async function loadMoreResults() {
     }
     page++;
     const searchTerm = query.value;
-    const url = searchTerm ? `${searchUrl}${searchTerm}&page=${page}` : `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=pt-BR&query=${randomLetter()}&page=${page}`;
+    const url = searchTerm ? `${searchUrl}${searchTerm}&page=${page}` : `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${randomLetter()}&page=${page}`;
     await fetchAndShowResult(url);
 }
 
@@ -128,7 +128,7 @@ window.addEventListener('resize', detectEnd);
 // Initialize the page
 async function init() {
     clearResults();
-    const url = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=pt-BR&query=${randomLetter()}`;
+    const url = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${randomLetter()}`;
     isSearching = false;
     await fetchAndShowResult(url);
 }
@@ -189,7 +189,7 @@ function showDetailsSerie(show){
 
 function showDetailsMovie(show){
     
-    const { release_date, genres, original_title, overview, poster_path, budget, runtime, revenue} = show;
+    const { release_date, genres, title, overview, poster_path, budget, runtime, revenue} = show;
 
     const releaseDate = release_date || 'No release date';
     const truncatedOverview = overview.length > 644 ? overview.slice(0,644) + '...' : overview;
@@ -213,7 +213,7 @@ function showDetailsMovie(show){
     <p class="details-btn" onclick="hideDetails()">X</p>
     <img class="details-img" src=${imagePath} height="100%">
     <div class="cabecalho">
-        <h1 class="title">${original_title}</h1>
+        <h1 class="title">${title}</h1>
         <p class="genres">${genreNames.slice(0,genreNames.length-2)}</p>
         <p class="description">${truncatedOverview}</p>
         <p></p>
@@ -243,7 +243,7 @@ function hideDetails(){
 }
 async function clickCard(id, type){
     isSearching = true;
-    const url = `https://api.themoviedb.org/3/${type}/${id}?api_key=fc535d51c073ba114e04ff261a9b6350&language=pt-BR`
+    const url = `https://api.themoviedb.org/3/${type}/${id}?api_key=fc535d51c073ba114e04ff261a9b6350`
     await fetchDetails(url, type)
 }
 init();
