@@ -12,7 +12,7 @@
     justify-content: space-between;
     align-items: center;
     display: flex;
-    margin-left: 30px;
+    margin: 30px;
 }
 .logo img{
     width: 4rem;

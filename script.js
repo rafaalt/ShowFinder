@@ -1,6 +1,6 @@
 const apiKey = "fc535d51c073ba114e04ff261a9b6350";
 const imgApi = "https://image.tmdb.org/t/p/w1280";
-const searchUrl = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=`;
+const searchUrl = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=pt-BR&query=`;
 const form = document.getElementById("search-form");
 const query = document.getElementById("search-input");
 const result = document.getElementById("result");
@@ -42,9 +42,9 @@ async function fetchAndShowResult(url) {
 
 // Create movie card html template
 function createMovieCard(movie) {
-    const { poster_path, original_title, release_date, overview, original_name, first_air_date, id, media_type} = movie;
+    const { poster_path, title, release_date, overview, name, first_air_date, id, media_type} = movie;
     const imagePath = poster_path ? imgApi + poster_path : "./null.png";
-    const tvTitle = original_title || original_name;
+    const tvTitle = title || name;
     const truncatedTitle = tvTitle.length > 15 ? tvTitle.slice(0, 15) + "..." : tvTitle;
     let dataFormatada = "No release date"
     const truncatedData = release_date || first_air_date;
@@ -58,7 +58,7 @@ function createMovieCard(movie) {
         <div class="column">
             <div class="card" onclick="clickCard(${id},'${media_type}')">
                 <a class="card-media">
-                    <img src="${imagePath}" alt="${original_title}" width="100%" />
+                    <img src="${imagePath}" alt="${title}" width="100%" />
                 </a>
                 <div class="card-content">
                     <div class="card-header">
@@ -95,7 +95,7 @@ async function loadMoreResults() {
     }
     page++;
     const searchTerm = query.value;
-    const url = searchTerm ? `${searchUrl}${searchTerm}&page=${page}` : `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${randomLetter()}&page=${page}&language=en-US`;
+    const url = searchTerm ? `${searchUrl}${searchTerm}&page=${page}` : `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=pt-BR&query=${randomLetter()}&page=${page}`;
     await fetchAndShowResult(url);
 }
 
@@ -128,14 +128,14 @@ window.addEventListener('resize', detectEnd);
 // Initialize the page
 async function init() {
     clearResults();
-    const url = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${randomLetter()}&language=en-US`;
+    const url = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=pt-BR&query=${randomLetter()}`;
     isSearching = false;
     await fetchAndShowResult(url);
 }
 
 function showDetailsSerie(show){
     
-    const { first_air_date, genres, last_air_date, original_name, number_of_episodes, episode_run_time, number_of_seasons, overview, poster_path, in_production} = show;
+    const { first_air_date, genres, last_air_date, name, number_of_episodes, episode_run_time, number_of_seasons, overview, poster_path, in_production} = show;
     // Criar uma nova div
     const firstDate = first_air_date || 'Sem data de lançamento';
     const truncatedOverview = overview.length > 644 ? overview.slice(0,644) + '...' : overview;
@@ -165,7 +165,7 @@ function showDetailsSerie(show){
     <p class="details-btn" onclick="hideDetails()">X</p>
     <img class="details-img" src=${imagePath} height="100%">
     <div class="cabecalho">
-        <h1 class="title">${original_name}</h1>
+        <h1 class="title">${name}</h1>
         <p class="genres">${genreNames.slice(0,genreNames.length-2)}</p>
         <p class="description">${truncatedOverview}</p>
         <p></p>
@@ -243,7 +243,7 @@ function hideDetails(){
 }
 async function clickCard(id, type){
     isSearching = true;
-    const url = `https://api.themoviedb.org/3/${type}/${id}?api_key=fc535d51c073ba114e04ff261a9b6350`
+    const url = `https://api.themoviedb.org/3/${type}/${id}?api_key=fc535d51c073ba114e04ff261a9b6350&language=pt-BR`
     await fetchDetails(url, type)
 }
 init();
