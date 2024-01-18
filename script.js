@@ -1,6 +1,6 @@
 const apiKey = "fc535d51c073ba114e04ff261a9b6350";
 const imgApi = "https://image.tmdb.org/t/p/w1280";
-const searchUrl = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}query=`;
+const searchUrl = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=pt-BR&query=`;
 const form = document.getElementById("search-form");
 const query = document.getElementById("search-input");
 const result = document.getElementById("result");
@@ -95,7 +95,7 @@ async function loadMoreResults() {
     }
     page++;
     const searchTerm = query.value;
-    const url = searchTerm ? `${searchUrl}${searchTerm}&page=${page}` : `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${randomLetter()}&page=${page}`;
+    const url = searchTerm ? `${searchUrl}${searchTerm}&page=${page}` : `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=pt-BR&query=${randomLetter()}&page=${page}`;
     await fetchAndShowResult(url);
 }
 
@@ -128,7 +128,7 @@ window.addEventListener('resize', detectEnd);
 // Initialize the page
 async function init() {
     clearResults();
-    const url = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${randomLetter()}`;
+    const url = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=pt-BR&query=${randomLetter()}`;
     isSearching = false;
     await fetchAndShowResult(url);
 }
@@ -243,7 +243,7 @@ function hideDetails(){
 }
 async function clickCard(id, type){
     isSearching = true;
-    const url = `https://api.themoviedb.org/3/${type}/${id}?api_key=fc535d51c073ba114e04ff261a9b6350`
+    const url = `https://api.themoviedb.org/3/${type}/${id}?api_key=fc535d51c073ba114e04ff261a9b6350&language=pt-BR`
     await fetchDetails(url, type)
 }
 init();
